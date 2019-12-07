@@ -23,8 +23,8 @@ class FaqsController {
     const faqs = await Faq.all();
 
     response.json({
-      message: "success",
-      data: faqs
+      status: "success",
+      data: { faqs: faqs }
     });
   }
 
@@ -48,11 +48,11 @@ class FaqsController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
-    const faq = await Faq.find(params.id);
+    const faq = await Faq.findOrFail(params.id);
 
     response.json({
-      message: "success",
-      data: faq
+      status: "success",
+      data: { faq }
     });
   }
 
