@@ -47,7 +47,14 @@ class FaqsController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    const faq = await Faq.find(params.id);
+
+    response.json({
+      message: "success",
+      data: faq
+    });
+  }
 
   /**
    * Update faq details.
