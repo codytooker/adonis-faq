@@ -1,7 +1,7 @@
-'use strict'
+"use strict";
 
 /** @type {import('@adonisjs/framework/src/Server')} */
-const Server = use('Server')
+const Server = use("Server");
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +12,7 @@ const Server = use('Server')
 | match.
 |
 */
-const globalMiddleware = []
+const globalMiddleware = ["Adonis/Middleware/BodyParser"];
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +31,8 @@ const globalMiddleware = []
 | Route.get().middleware('auth')
 |
 */
-const namedMiddleware = {}
+const namedMiddleware = {};
 
-Server
-  .registerGlobal(globalMiddleware)
+Server.registerGlobal(globalMiddleware)
   .registerNamed(namedMiddleware)
-  .use(['Adonis/Middleware/Static'])
+  .use(["Adonis/Middleware/Static"]);
