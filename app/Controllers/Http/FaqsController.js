@@ -36,7 +36,18 @@ class FaqsController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) {
+    const data = request.only(["title", "description"]);
+
+    //TODO: validation;
+
+    const faq = await Faq.create(data);
+
+    response.json({
+      status: "success",
+      data: { faq }
+    });
+  }
 
   /**
    * Display a single faq.

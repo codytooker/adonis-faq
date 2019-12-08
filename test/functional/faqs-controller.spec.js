@@ -1,13 +1,21 @@
 "use strict";
 
-const { test, trait } = use("Test/Suite")("Faqs Controller");
+const { test, trait, before } = use("Test/Suite")("Faqs Controller");
 const Factory = use("Factory");
 
 trait("Test/ApiClient");
 trait("DatabaseTransactions");
 
+const testFaqObject = {
+  title: "Testing Faq Object Title",
+  description: "Testing Faq Object description"
+};
+
 const Faq = Factory.model("App/Models/Faq");
 
+/**
+ * GET REQUESTS
+ */
 test("can fetch all faqs", async ({ assert, client }) => {
   await Faq.createMany(3);
 
@@ -22,28 +30,36 @@ test("can fetch all faqs", async ({ assert, client }) => {
 //TODO: should test that we get an error when fetching faqs if they don't exists
 
 test("can fetch a single faq", async ({ client }) => {
-  const faqObject = {
-    title: "Single Faq to fetch",
-    description: "This is a single faq to fetch"
-  };
-
-  await Faq.create(faqObject);
+  await Faq.create(testFaqObject);
 
   const response = await client.get("/faqs/1").end();
 
   response.assertStatus(200);
   response.assertJSONSubset({
-    data: { faq: faqObject }
+    data: { faq: testFaqObject }
   });
 });
 
-test("can't fetch an faq that does not exist", async ({ assert, client }) => {
+test("can't fetch an faq that does not exist", async ({ client }) => {
   const response = await client.get("faqs/1").end();
 
   response.assertStatus(404);
 });
 
-//TODO: test that we can create FAQs
+/**
+ * POST REQUESTS
+ */
+test("can create an faq", async ({ assert, client }) => {
+  const response = await client
+    .post("/faqs")
+    .send(testFaqObject)
+    .end();
+
+  response.assertStatus(200);
+  response.assertJSONSubset({
+    data: { faq: testFaqObject }
+  });
+});
 
 //TODO: test that we can delete faqs
 
