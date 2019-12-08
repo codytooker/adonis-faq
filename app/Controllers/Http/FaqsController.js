@@ -85,7 +85,14 @@ class FaqsController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) {
+    const { id } = params;
+    const faq = await Faq.findOrFail(id);
+
+    await faq.delete();
+
+    response.status(204);
+  }
 }
 
 module.exports = FaqsController;

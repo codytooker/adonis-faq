@@ -12,6 +12,7 @@ const testFaqObject = {
 };
 
 const Faq = Factory.model("App/Models/Faq");
+const FaqModel = use("App/Models/Faq");
 
 /**
  * GET REQUESTS
@@ -40,7 +41,7 @@ test("can fetch a single faq", async ({ client }) => {
   });
 });
 
-test("can't fetch an faq that does not exist", async ({ client }) => {
+test("fetching an faq that doesn't exist returns a 404", async ({ client }) => {
   const response = await client.get("faqs/1").end();
 
   response.assertStatus(404);
@@ -49,7 +50,7 @@ test("can't fetch an faq that does not exist", async ({ client }) => {
 /**
  * POST REQUESTS
  */
-test("can create an faq", async ({ assert, client }) => {
+test("can create an faq", async ({ client }) => {
   const response = await client
     .post("/faqs")
     .send(testFaqObject)
@@ -61,8 +62,30 @@ test("can create an faq", async ({ assert, client }) => {
   });
 });
 
-//TODO: test that we can delete faqs
+/**
+ * DELETE REQUESTS
+ */
+test("can delete an faq", async ({ assert, client }) => {
+  await Faq.createMany(4);
 
-//TODO: test that we can update faqs
+  const response = await client.delete("/faqs/3").end();
+  const faqCount = await FaqModel.getCount();
+
+  response.assertStatus(204);
+  assert.equal(faqCount, 3);
+});
+
+test("deleting a faq that doesn't exist returns a 404", async ({
+  assert,
+  client
+}) => {
+  await Faq.create();
+
+  const response = await client.delete("/faqs/2").end();
+  const faqCount = await FaqModel.getCount();
+
+  response.assertStatus(404);
+  assert.equal(faqCount, 1);
+});
 
 //TODO: figure out logging in the controller for different use cases.  Error, success, etc
