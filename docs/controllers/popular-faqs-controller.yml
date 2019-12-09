@@ -1,0 +1,33 @@
+/popular-faqs:
+  post:
+    tags:
+      - PopularFaqsController.js
+    summary: Converts an Faq from unpopular to popular.
+    produces:
+      - application/json
+    responses:
+      200:
+        description: A FAQ object with isPopular set to true.
+        schema:
+          $ref: "#/definitions/Faq"
+      404:
+        description: A faq with the specified ID was not found.
+      default:
+        description: Unexpected error
+
+/popular-faqs/:id:
+  delete:
+    tags:
+      - PopularFaqsController.js
+    summary: Converts an Faq from popular to unpopular.
+    produces:
+      - application/json
+    responses:
+      200:
+        description: A FAQ object with isPopular set to false.
+        schema:
+          $ref: "#/definitions/Faq"
+      404:
+        description: A faq with the specified ID was not found.
+      default:
+        description: Unexpected error

@@ -15,7 +15,7 @@ module.exports = {
   options: {
     swaggerDefinition: {
       info: {
-        title: "Adonis 💘 Swagger",
+        title: "Faq Microservice",
         version: "1.0.0"
       },
 
