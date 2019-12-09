@@ -1,6 +1,6 @@
 "use strict";
 
-const { test, trait, before } = use("Test/Suite")("Faqs Controller");
+const { test, trait } = use("Test/Suite")("Faqs Controller");
 const Factory = use("Factory");
 
 trait("Test/ApiClient");

@@ -18,7 +18,6 @@ Factory.blueprint("App/Models/Faq", async (faker, i, data) => {
   return {
     title: data.title || faker.sentence({ words: 3 }),
     description: data.description || faker.paragraph(),
-    is_active: data.is_active || true,
-    is_popular: data.is_popular || true
+    isPopular: data.isPopular || false
   };
 });

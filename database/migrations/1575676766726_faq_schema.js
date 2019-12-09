@@ -10,11 +10,7 @@ class FaqSchema extends Schema {
       table.string("title").notNullable();
       table.string("description").notNullable();
       table
-        .boolean("is_active")
-        .notNullable()
-        .defaultTo(true);
-      table
-        .boolean("is_popular")
+        .boolean("isPopular")
         .notNullable()
         .defaultTo(false);
       table.timestamps();
