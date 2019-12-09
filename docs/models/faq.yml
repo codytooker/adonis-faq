@@ -1,0 +1,15 @@
+definitions:
+  Faq:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      description:
+        type: string
+      isPopular:
+        type: boolean
+    required:
+      - title
+      - description

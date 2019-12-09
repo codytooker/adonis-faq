@@ -1,0 +1,17 @@
+/faqs/:id:
+  get:
+    tags:
+      - FaqsController.js
+    summary: Returns a faq by ID
+    description: Fetch a faq model by id.
+    produces:
+      - application/json
+    responses:
+      200:
+        description: A FAQ object.
+        schema:
+          $ref: "#/definitions/Faq"
+      404:
+        description: A faq with the specified ID was not found.
+      default:
+        description: Unexpected error
