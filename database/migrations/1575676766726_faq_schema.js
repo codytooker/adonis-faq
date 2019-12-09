@@ -8,7 +8,7 @@ class FaqSchema extends Schema {
     this.create("faqs", table => {
       table.increments();
       table.string("title").notNullable();
-      table.string("description").notNullable();
+      table.text("description").notNullable();
       table
         .boolean("isPopular")
         .notNullable()
