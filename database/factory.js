@@ -16,8 +16,14 @@ const Factory = use("Factory");
 
 Factory.blueprint("App/Models/Faq", async (faker, i, data) => {
   return {
-    title: data.title || faker.sentence({ words: 3 }),
+    title: data.title || faker.sentence({ words: 2 }),
     description: data.description || faker.paragraph(),
     isPopular: data.isPopular || false
+  };
+});
+
+Factory.blueprint("App/Models/Category", async (faker, i, data) => {
+  return {
+    title: data.title || faker.sentence({ words: 3 })
   };
 });

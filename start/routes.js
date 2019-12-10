@@ -20,3 +20,5 @@ Route.resource("faqs", "FaqsController").apiOnly();
 
 Route.post("popular-faqs", "PopularFaqsController.store");
 Route.delete("popular-faqs/:id", "PopularFaqsController.destroy");
+
+Route.resource("categories", "CategoriesController").apiOnly();
