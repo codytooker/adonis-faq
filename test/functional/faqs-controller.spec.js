@@ -12,18 +12,38 @@ const testFaqObject = {
 };
 
 const Faq = Factory.model("App/Models/Faq");
+const Category = Factory.model("App/Models/Category");
+
 const FaqModel = use("App/Models/Faq");
 
 /**
  * GET REQUESTS
  */
 test("can fetch all faqs", async ({ assert, client }) => {
-  await Faq.createMany(3);
+  //create faqs and cateogires
+  const newFaqs = await Faq.createMany(2);
+  const category1 = await Category.make({ title: "Category 1 Title" });
+  const category2 = await Category.make({ title: "Category 2 Title" });
+  const category3 = await Category.make({ title: "Category 3 Title" });
 
+  //assign categories to faqs
+  await newFaqs[0].categories().save(category1);
+  await newFaqs[1].categories().saveMany([category2, category3]);
+
+  //fet faqs
   const response = await client.get("/faqs").end();
 
+  //make assertions
+  const { faqs } = response.body.data;
   response.assertStatus(200);
-  assert.equal(response.body.data.faqs.length, 3);
+  assert.equal(faqs.length, 2);
+
+  assert.equal(faqs[0].categories.length, 1);
+  assert.equal(faqs[1].categories.length, 2);
+
+  assert.equal(faqs[0].categories[0].title, "Category 1 Title");
+  assert.equal(faqs[1].categories[0].title, "Category 2 Title");
+  assert.equal(faqs[1].categories[1].title, "Category 3 Title");
 
   //TODO: possible assert that we have certain columns of data in each one
 });

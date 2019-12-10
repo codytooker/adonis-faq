@@ -18,7 +18,9 @@ class FaqsController {
    * @param {Response} ctx.response
    */
   async index({ request, response }) {
-    const faqs = await Faq.all();
+    const faqs = await Faq.query()
+      .with("categories")
+      .fetch();
 
     response.json({
       status: "success",

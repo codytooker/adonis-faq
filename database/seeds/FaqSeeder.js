@@ -1,5 +1,7 @@
 "use strict";
 
+const _ = require("lodash");
+
 /*
 |--------------------------------------------------------------------------
 | FaqSeeder
@@ -15,7 +17,16 @@ const Factory = use("Factory");
 
 class FaqSeeder {
   async run() {
-    await Factory.model("App/Models/Faq").createMany(10);
+    const faqs = await Factory.model("App/Models/Faq").createMany(10);
+    const categories = await Factory.model("App/Models/Category").createMany(5);
+
+    faqs.forEach(faq => {
+      const categoriesToAttach = _.sampleSize(
+        _.map(categories, category => category.id),
+        Math.floor(Math.random() * 5) + 1
+      );
+      faq.categories().sync(categoriesToAttach);
+    });
   }
 }
 

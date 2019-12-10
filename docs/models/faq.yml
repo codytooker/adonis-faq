@@ -11,6 +11,11 @@ definitions:
       isPopular:
         type: boolean
         default: false
+      categories:
+        type: array
+        items:
+          type: object
+          $ref: "#/definitions/Category"
     required:
       - title
       - description
